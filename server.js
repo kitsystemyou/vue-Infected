@@ -6,6 +6,7 @@
 const express = require("express");
 const app = express();
 var request = require('request');
+var csvParse = require('csv-parse/lib/sync');
 
 // our default array of dreams
 const dreams = [
@@ -20,7 +21,12 @@ var options = {
 }
 
 request(options, function (error, response, body) {
-    console.log(body[2]);
+  const parser = csvParse(body, {
+    //内容出力
+    delimiter: ',', 
+    rowDelimiter: 'auto',
+    })
+  console.log(parser[0])
 })
 
 // make all the files in 'public' available
